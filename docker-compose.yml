@@ -1,0 +1,53 @@
+version: '3.7'
+
+services:
+  kafka:
+    image: wurstmeister/kafka:2.13-2.7.0
+    ports:
+      - "9092:9092"
+    expose:
+      - "9093"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9093,OUTSIDE://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  zookeeper:
+    image: wurstmeister/zookeeper:3.4.6
+    ports:
+      - "2181:2181"
+
+  airflow:
+    image: puckel/docker-airflow:1.10.9
+    ports:
+      - "8080:8080"
+    environment:
+      - LOAD_EX=n
+      - FERNET_KEY=V6nya_2xNSdPFiduB_3RbdoJ0qPfl87dsZhgwH7PQOk=  # Replace with a secure fernet key
+    volumes:
+      - ./dags:/usr/local/airflow/dags
+
+  spark:
+      image: spark
+      environment:
+        - SPARK_MODE=master
+        - SPARK_RPC_AUTH_SECRET=1YzA2bru5FIZZEk8i/T1a69cX/lpufacRpKsEf3He9s=  # Replace with a secure secret
+      ports:
+        - "4040:4040"
+      volumes:
+        - ./spark-apps:/opt/spark/work
+      depends_on:
+        - hdfs
+
+  hdfs:
+    image: sequenceiq/hadoop-docker:2.7.1
+    expose:
+      - "50070"
+    ports:
+      - "50070:50070"
+    volumes:
+      - ./hdfs-data:/usr/local/hadoop_store/hdfs
