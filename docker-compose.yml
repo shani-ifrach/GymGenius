@@ -21,7 +21,7 @@ services:
     ports:
       - "2181:2181"
 
-  airflow:
+  webserver:
     image: puckel/docker-airflow:1.10.9
     ports:
       - "8080:8080"
@@ -29,7 +29,17 @@ services:
       - LOAD_EX=n
       - FERNET_KEY=V6nya_2xNSdPFiduB_3RbdoJ0qPfl87dsZhgwH7PQOk=  # Replace with a secure fernet key
     volumes:
-      - ./dags:/usr/local/airflow/dags
+      - ./dags:\dags
+      - ./output:\output
+
+  scheduler:
+    image: apache/airflow:latest
+    depends_on:
+      - webserver
+    command: scheduler
+    volumes:
+      - ./dags:\dags
+      - ./output:\output
 
   spark:
       image: spark

@@ -1,13 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from src.database import get_db_as_df
 from src.api import get_nutirtion_info
 import json
-import pandas as pd
-
-num = 0
+from hdfs.hdfs_funcs import update_csv_file
 
 app = Flask(__name__)
-table_df = get_db_as_df("exercises7")
+table_df = get_db_as_df("exercises")
 
 
 @app.route('/')
@@ -15,40 +13,9 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/photo-detail')
-def photo_detail():
-    return render_template('photo-detail.html')
-
-@app.route('/photos')
-def photos():
-    global num
-    num += 1
-    return render_template('photos.html',photos_count = num, exercises=["static\images\img-06.jpg", "static\images\img-05.jpg", "static\images\img-04.jpg", "static\images\img-03.jpg", "static\images\img-02.jpg"])
-
-
-@app.route('/try/<param>')
-def photo(param):
-    """
-    :param param: goes with the url and passes the exercise
-    :return: should find the data on the passed exercise and passing the data to the html file
-    """
-    ex_title = param
-    explanation = param
-    photo_img = "static\images\home.jpg"
-
-    return render_template('try.html', title=ex_title, img=photo_img, text=explanation)
-
 @app.route('/login')
 def login():
     return render_template('login.html')
-
-@app.route('/signup')
-def signup():
-    return render_template('signup.html')
-
-@app.route('/trainer')
-def trainer():
-    return render_template('trainer.html')
 
 @app.route('/all exercises')
 def all_ex():
@@ -66,6 +33,15 @@ def exercises_list(chosen_bodypart):
 def about():
     return render_template('about.html')
 
+@app.route("/call_update_csv", methods=["POST"])
+def call_update_csv():
+    data_received = request.get_json()
+    param = data_received.get('param', '')
+
+    # Call the Python function with the parameter
+    result = update_csv_file(int(param))
+
+    return jsonify({'result': result})
 
 @app.route('/favorites exercises')
 def favorites():
