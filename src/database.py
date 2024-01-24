@@ -1,12 +1,12 @@
-import sqlite3
 import os
 import pandas as pd
 import sqlite3
+from utils.read_files import project_directory
+
 
 def db_connection_wrapper(func):
     def wrapper(*args, **kwargs):
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        db_path = os.path.join(os.path.dirname(current_dir), 'db', 'sport.db')
+        db_path = os.path.join(project_directory, 'data', 'db', 'sport.db')
         connection = sqlite3.connect(db_path)
         result = func(connection, *args, **kwargs)
         connection.close()
