@@ -30,24 +30,10 @@ def print_table(connection, table_name):
     for row in rows:
         print(row)
 
+
 @db_connection_wrapper
-def create_table(connection, table_name):
+def create_table(connection, create_table_query):
     cursor = connection.cursor()
-    create_table_query = f'''
-        CREATE TABLE IF NOT EXISTS {table_name} (
-            id INTEGER PRIMARY KEY,
-            bodyPart TEXT,
-            equipment TEXT,
-            name TEXT,
-            target TEXT,
-            secondaryMuscles TEXT,
-            instructions TEXT,
-            url TEXT,
-            clicks_num INTEGER DEFAULT 0,
-            likes_num INTEGER DEFAULT 0,
-            done_num INTEGER DEFAULT 0
-        )
-    '''
 
     # Execute the SQL query to create the table
     cursor.execute(create_table_query)

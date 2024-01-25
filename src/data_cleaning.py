@@ -31,13 +31,10 @@ def df_into_table(conn, df, table_name, if_exists = "append"):
 def create_url_info(df):
     url_column = 'url'
     base_url = r'https://www.google.com/search?q='
-    print(df)
     values = []
     for value in df["name"]:
         values.append(base_url + value.replace(" ", "+") + "+exercise")
-    print(values)
     df.insert(0, url_column, values)
-    df.to_csv(r'C:\Users\LIRAZ\nginx-image\files\output_file1.csv', index=False)
     return df
 
 

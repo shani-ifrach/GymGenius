@@ -1,7 +1,3 @@
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-
 from flask import Flask, render_template, request, jsonify
 from src.database import get_db_as_df
 from src.api import get_nutrition_info
@@ -9,9 +5,10 @@ import json
 from aws_utils.dynamo_db_funcs import insert_event_to_dynamodb
 from datetime import datetime
 from aws_utils.dynamo_db_funcs import get_favorites
+from utils.read_files import yaml_data
 
 app = Flask(__name__)
-table_df = get_db_as_df("exercises")
+table_df = get_db_as_df(yaml_data['exercises_table_name'])
 
 
 @app.route('/')

@@ -2,7 +2,6 @@ import boto3
 import pandas as pd
 from io import StringIO
 import os
-from datetime import datetime
 from utils.read_files import yaml_data
 
 
@@ -36,3 +35,6 @@ def update_csv_in_s3(new_data, s3_key):
 
     print("CSV file updated successfully.")
 
+if __name__ == '__main__':
+    #upload_file_to_s3()
+    upload_file_to_s3(r"C:\Users\LIRAZ\PycharmProjects\GymGenius\utils\params.yml")
