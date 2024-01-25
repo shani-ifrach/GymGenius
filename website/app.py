@@ -46,14 +46,11 @@ def call_insert_event_to_dynamodb():
     param = data_received.get('param', '')
     print(param)
     # Call the Python function with the parameter
-    result = insert_event_to_dynamodb({'id': int(param), 'time': str(datetime.now())})
+    result = insert_event_to_dynamodb({'id': int(param), 'event_time': str(datetime.now())})
     print(result)
 
     return jsonify({'result':result})
 
-@app.route('/favorites exercises')
-def favorites():
-    return render_template('favorites.html')
 
 @app.route('/nutrition', methods=['GET', 'POST'])
 def nutrition():
