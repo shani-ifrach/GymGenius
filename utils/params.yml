@@ -1,0 +1,12 @@
+# aws_utils authentication params
+aws_access_key_id : 'AKIA47CRXPNBRPA73VOL'
+aws_secret_access_key : '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'
+region_name : 'us-east-1'
+
+# aws_utils bucket
+s3_bucket_name : 'gymgeniusbucket'
+
+# aws_utils dynamoDB
+table_name : 'events_data'
+
+
