@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 from flask import Flask, render_template, request, jsonify
 from src.database import get_db_as_df
 from src.api import get_nutrition_info
