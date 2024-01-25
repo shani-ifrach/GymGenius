@@ -1,7 +1,7 @@
-#GymGenius - Your Ultimate Fitness Companion
+# GymGenius - Your Ultimate Fitness Companion
 GymGenius is a comprehensive fitness website that offers a collection of over 1300 sports exercises sourced from a meticulously curated dataset obtained from the internet. The platform aims to empower users with a wealth of exercise options to make their fitness journey more enjoyable and effective.
 
-Key Features:
+## Key Features:
 1. Exercise Database and ETL Process
 Leveraging a robust Extract, Transform, Load (ETL) process, GymGenius efficiently processes the dataset information, storing it in an SQLite database for seamless access and retrieval.
 2. Nutrition Calculator
