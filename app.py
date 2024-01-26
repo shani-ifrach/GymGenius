@@ -1,7 +1,3 @@
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-
 from flask import Flask, render_template, request, jsonify
 from src.database import get_db_as_df
 from src.api import get_nutrition_info
@@ -68,6 +64,7 @@ def nutrition():
         desc = [json.loads(i) for i in desc]
 
     return render_template('nutrition.html', descs = desc)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
