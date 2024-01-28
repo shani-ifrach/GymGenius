@@ -28,6 +28,7 @@ Welcome to GymGenius, a dynamic sports-centric website designed to guide individ
 * API Integration
 * DynamoDB
 * Pandas
+* S3 - stores params.yml
 
 
 
