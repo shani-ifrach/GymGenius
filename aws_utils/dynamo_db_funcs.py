@@ -8,7 +8,7 @@ import uuid
 #from pyspark.sql import SparkSession
 
 
-def get_favorites_spark():
+def get_popular_spark():
     # Initialize Spark session
     spark = SparkSession.builder \
         .appName("DynamoDB Spark Example") \
@@ -42,7 +42,7 @@ def get_favorites_spark():
     return lst
 
 
-def get_favorites():
+def get_popular():
     # Read data from DynamoDB
     dynamodb = boto3.resource('dynamodb', region_name=yaml_data['region_name'],
                               aws_access_key_id=yaml_data['aws_access_key_id'],
@@ -50,9 +50,6 @@ def get_favorites():
     table = dynamodb.Table(yaml_data['table_name'])
     response = table.scan()
     items = response['Items']
-    """while 'LastEvaluatedKey' in response:
-        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
-        items.extend(response['Items'])"""
 
     # Convert to Pandas DataFrame
     df = pd.DataFrame(items)
@@ -81,4 +78,4 @@ def insert_event_to_dynamodb(new_item_data):
 
 
 if __name__ == '__main__':
-    get_favorites()
+    get_popular()

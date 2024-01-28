@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -23,7 +24,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{{ url_for('all_ex') }}">View All</a>
-          <a class="dropdown-item" href="list exercises/favorites">Favorites</a>
+          <a class="dropdown-item" href="{{url_for('exercises_list', chosen_bodypart = 'Popular')}}">Popular</a>
         </div>
       </li>
         <li class="nav-item">

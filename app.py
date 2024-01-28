@@ -4,7 +4,7 @@ from src.api import get_nutrition_info
 import json
 from aws_utils.dynamo_db_funcs import insert_event_to_dynamodb
 from datetime import datetime
-from aws_utils.dynamo_db_funcs import get_favorites
+from aws_utils.dynamo_db_funcs import get_popular
 from utils.read_files import yaml_data
 
 app = Flask(__name__)
@@ -16,23 +16,20 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
 @app.route('/all exercises')
 def all_ex():
     return render_template('all_ex.html')
+
 
 @app.route('/list exercises/<chosen_bodypart>')
 def exercises_list(chosen_bodypart):
     if chosen_bodypart == "all":
         exercises = table_df
-    elif chosen_bodypart == 'favorites':
-        favs = get_favorites()
-        if favs is None:
-            favs = []
-        exercises = table_df[table_df["id"].isin(tuple(favs))]
+    elif chosen_bodypart == 'Popular':
+        popular = get_popular()
+        if popular is None:
+            popular = []
+        exercises = table_df[table_df["id"].isin(tuple(popular))]
     else:
         exercises = table_df[table_df['bodyPart'] == chosen_bodypart]
     return render_template('exercises_list.html', chosen_bodypart=chosen_bodypart, exercises = exercises)
